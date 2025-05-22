@@ -4,7 +4,7 @@ A classic Snake game built with JavaScript, HTML5 Canvas, and CSS. Navigate the 
 
 ## Live Demo
 
-Play the game live: https://reddy6812.github.io/snakegame/
+Play the game live: [https://reddy6812.github.io/snakegame/](https://reddy6812.github.io/snakegame/index.html)
 
 ## Getting Started
 
