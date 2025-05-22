@@ -17,11 +17,16 @@ body {
 
 /* Canvas styling */
 canvas {
-    background: #000;
+    background-color: #111;
+    /* subtle grid background */
+    background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
     display: block;
     margin: 0 auto;
-    box-shadow: 0 0 10px #555;
-    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    border-radius: 8px;
 }
 
 /* Score display */

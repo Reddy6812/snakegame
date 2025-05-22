@@ -13,6 +13,22 @@ let score;
 let gameInterval;
 let speed = 150;
 
+// Add helper function to draw rounded rectangles
+function drawRoundedRect(x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+    ctx.fill();
+}
+
 // Snake class definition
 class Snake {
     constructor() {
@@ -27,10 +43,17 @@ class Snake {
     }
 
     draw() {
-        ctx.fillStyle = '#27ae60';
+        ctx.save();
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 10;
+        const grad = ctx.createLinearGradient(0, 0, scale, scale);
+        grad.addColorStop(0, '#00ff00');
+        grad.addColorStop(1, '#006400');
+        ctx.fillStyle = grad;
         for (let segment of this.body) {
-            ctx.fillRect(segment.x * scale, segment.y * scale, scale, scale);
+            drawRoundedRect(segment.x * scale, segment.y * scale, scale, scale, scale * 0.2);
         }
+        ctx.restore();
     }
 
     update() {
@@ -41,9 +64,11 @@ class Snake {
         }
 
         const head = { x: this.body[0].x + this.xSpeed, y: this.body[0].y + this.ySpeed };
-        // Wrap around edges
-        head.x = (head.x + cols) % cols;
-        head.y = (head.y + rows) % rows;
+        // Check for border collision
+        if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
+            gameOver();
+            return;
+        }
 
         // Check self-collision
         for (let segment of this.body) {
@@ -85,8 +110,18 @@ function placeFood() {
 }
 
 function drawFood() {
-    ctx.fillStyle = '#e74c3c';
-    ctx.fillRect(food.x * scale, food.y * scale, scale, scale);
+    ctx.save();
+    const centerX = food.x * scale + scale / 2;
+    const centerY = food.y * scale + scale / 2;
+    const grad = ctx.createRadialGradient(centerX, centerY, scale * 0.1, centerX, centerY, scale * 0.5);
+    grad.addColorStop(0, '#ffcccc');
+    grad.addColorStop(0.5, '#ff0000');
+    grad.addColorStop(1, '#880000');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, scale * 0.4, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.restore();
 }
 
 function gameOver() {

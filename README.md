@@ -1,6 +1,6 @@
 # Snake Game
 
-A classic Snake game built with JavaScript, HTML5 Canvas, and CSS. Navigate the snake to eat food, grow longer, and avoid colliding with yourself. The snake wraps around the edges—no touching borders!
+An enhanced Snake game built with JavaScript, HTML5 Canvas, and CSS, featuring smooth rounded graphics, dynamic gradients, and realistic collisions. Navigate the snake to eat food and grow longer. Colliding with borders or yourself ends the game.
 
 ## Live Demo
 
